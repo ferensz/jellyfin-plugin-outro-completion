@@ -6,6 +6,15 @@
     "overview": "Complete episodes stopped in credits without changing resume percentages.",
     "owner": "ferensz",
     "category": "General",
-    "versions": []
+    "versions": [
+      {
+        "version": "1.0.0.0",
+        "changelog": "Initial release for Jellyfin 12.2: native Outro completion, per-user next-episode confirmation, authenticated personal settings, alternate-version handling, and duplicate/reordered event protection.",
+        "targetAbi": "12.2.0.0",
+        "sourceUrl": "https://github.com/ferensz/jellyfin-plugin-outro-completion/releases/download/v1.0.0/OutroCompletion_1.0.0.0.zip",
+        "checksum": "fb946168e3394a6959ff014d671dd279",
+        "timestamp": "2026-10-28T16:57:34Z"
+      }
+    ]
   }
 ]
