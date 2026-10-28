@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Jellyfin.Plugin.OutroCompletion/Jellyfin.Plugin.OutroCompletion.csproj" />
+  <Project Path="tests/Jellyfin.Plugin.OutroCompletion.Tests/Jellyfin.Plugin.OutroCompletion.Tests.csproj" />
+</Solution>

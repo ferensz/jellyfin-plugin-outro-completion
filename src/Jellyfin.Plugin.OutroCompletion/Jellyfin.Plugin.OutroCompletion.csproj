@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <JellyfinTargetAbi>12.2.0.0</JellyfinTargetAbi>
+    <Authors>ferensz</Authors>
+    <RepositoryUrl>https://github.com/ferensz/jellyfin-plugin-outro-completion</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <Description>Complete Jellyfin episodes when playback stops inside an Outro segment.</Description>
+    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <!-- Jellyfin supplies these assemblies. Never deploy a second copy with the plugin. -->
+    <PackageReference Include="Jellyfin.Controller" Version="12.2.0" ExcludeAssets="runtime" PrivateAssets="all" />
+    <PackageReference Include="Jellyfin.Model" Version="12.2.0" ExcludeAssets="runtime" PrivateAssets="all" />
+    <EmbeddedResource Include="Web/*" />
+    <EmbeddedResource Include="../../LICENSE" LogicalName="Jellyfin.Plugin.OutroCompletion.Web.LICENSE" />
+  </ItemGroup>
+</Project>

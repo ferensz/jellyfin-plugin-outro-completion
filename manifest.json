@@ -1,0 +1,11 @@
+[
+  {
+    "guid": "0c220e70-bcdf-4af5-83a3-36f656694392",
+    "name": "Outro Completion",
+    "description": "Mark episodes watched when playback stops inside native Outro segments, with optional per-user confirmation that the immediate next episode started on the same session/device. Requires Jellyfin 12.2 and native Outro markers, such as those published by Intro Skipper.",
+    "overview": "Complete episodes stopped in credits without changing resume percentages.",
+    "owner": "ferensz",
+    "category": "General",
+    "versions": []
+  }
+]

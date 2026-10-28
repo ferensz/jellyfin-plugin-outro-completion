@@ -1,0 +1,30 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Test and package
+        shell: pwsh
+        run: ./build.ps1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: outro-completion
+          path: |
+            artifacts/*.zip
+            artifacts/*.sha256
+            artifacts/*.md5
+            artifacts/test-results/*.trx
+          if-no-files-found: error

@@ -1,0 +1,71 @@
+<div id="outroCompletionConfig" data-role="page" class="page type-interior pluginConfigurationPage"
+     data-require="emby-input,emby-button,emby-checkbox">
+    <div data-role="content">
+        <div class="content-primary">
+            <h1>Outro Completion</h1>
+            <p>Complete episodes stopped inside native Outro segments without changing global resume percentages.</p>
+            <form id="outroCompletionForm">
+                <label class="checkboxContainer">
+                    <input is="emby-checkbox" id="outroEnabled" type="checkbox">
+                    <span>Enable Outro Completion</span>
+                </label>
+                <label class="checkboxContainer">
+                    <input is="emby-checkbox" id="outroRequireNext" type="checkbox">
+                    <span>Require the immediate next episode by default</span>
+                </label>
+                <p>Users can override this default for their own watch history. Confirmation requires the same user, session/device, and series. Series finales have no next episode to confirm.</p>
+                <div class="inputContainer">
+                    <input is="emby-input" id="outroWindow" type="number" min="5" max="600" step="1" required
+                           label="Next episode confirmation window (seconds)">
+                    <div class="fieldDescription">5–600 seconds. Default: 120. This does not prevent Jellyfin from marking items watched using its own percentage rules.</div>
+                </div>
+                <button is="emby-button" type="submit" class="raised button-submit block"><span>Save</span></button>
+            </form>
+            <h2>Personal settings</h2>
+            <p><a id="outroPreferencesLink" target="_blank" rel="noopener noreferrer">Open your preferences</a>. Share this link with ordinary users; they sign in to change only their own settings.</p>
+            <h2>Requirements</h2>
+            <p>Enable Intro Skipper’s “Update Media Segments” option and ensure Outro markers are available. Other enabled native Outro segment providers also work. No client modifications are required.</p>
+            <p id="outroConfigStatus" role="status" aria-live="polite"></p>
+        </div>
+    </div>
+    <script>
+        (function () {
+            'use strict';
+            var pluginId = '0c220e70-bcdf-4af5-83a3-36f656694392';
+            var page = document.getElementById('outroCompletionConfig');
+            var form = page.querySelector('form');
+            var status = page.querySelector('#outroConfigStatus');
+            page.addEventListener('pageshow', async function () {
+                page.querySelector('#outroPreferencesLink').href = ApiClient.getUrl('OutroCompletion/Preferences');
+                try {
+                    var config = await ApiClient.getPluginConfiguration(pluginId);
+                    page.querySelector('#outroEnabled').checked = config.Enabled;
+                    page.querySelector('#outroRequireNext').checked = config.DefaultRequireNextEpisode;
+                    page.querySelector('#outroWindow').value = config.ConfirmationWindowSeconds;
+                    status.textContent = '';
+                } catch (_) {
+                    status.textContent = 'Could not load configuration. Reload before saving.';
+                    form.querySelector('button').disabled = true;
+                }
+            });
+            form.addEventListener('submit', async function (event) {
+                event.preventDefault();
+                if (!form.reportValidity()) return;
+                var button = form.querySelector('button');
+                button.disabled = true;
+                try {
+                    var config = await ApiClient.getPluginConfiguration(pluginId);
+                    config.Enabled = page.querySelector('#outroEnabled').checked;
+                    config.DefaultRequireNextEpisode = page.querySelector('#outroRequireNext').checked;
+                    config.ConfirmationWindowSeconds = Number(page.querySelector('#outroWindow').value);
+                    await ApiClient.updatePluginConfiguration(pluginId, config);
+                    status.textContent = 'Configuration saved.';
+                } catch (_) {
+                    status.textContent = 'Could not save configuration.';
+                } finally {
+                    button.disabled = false;
+                }
+            });
+        })();
+    </script>
+</div>

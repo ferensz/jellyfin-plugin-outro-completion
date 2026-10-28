@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark light">
+    <title>Outro Completion preferences</title>
+    <link rel="stylesheet" href="./assets/preferences.css">
+    <script src="./assets/preferences.js" defer></script>
+</head>
+<body>
+    <main>
+        <header>
+            <p class="eyebrow">Jellyfin plugin</p>
+            <h1>Outro Completion</h1>
+            <p>Finish the episode, not the credits.</p>
+        </header>
+        <section id="login-section" aria-labelledby="login-heading">
+            <h2 id="login-heading">Your watch history, your choice</h2>
+            <p>Sign in to this Jellyfin server to change only your own preferences. This page does not store your password or access token.</p>
+            <p id="https-warning" class="notice" hidden>This connection is not HTTPS. Use HTTPS when signing in over an untrusted network.</p>
+            <form id="login-form" method="post">
+                <label for="username">Jellyfin username</label>
+                <input id="username" name="username" aria-label="Jellyfin username" autocomplete="username" required>
+                <label for="password">Password</label>
+                <input id="password" name="password" aria-label="Password" type="password" autocomplete="current-password">
+                <button type="submit">Sign in</button>
+            </form>
+        </section>
+        <section id="preferences-section" aria-labelledby="preferences-heading" hidden>
+            <div class="section-header">
+                <h2 id="preferences-heading">Your preferences</h2>
+                <button id="logout" type="button" class="secondary">Sign out</button>
+            </div>
+            <p id="signed-in-as"></p>
+            <p id="server-disabled" class="notice" hidden>The administrator has disabled Outro Completion. Your preferences will apply when it is enabled again.</p>
+            <form id="preferences-form" method="post">
+                <label class="check"><input id="enabled" type="checkbox" aria-label="Enable Outro Completion for me"> Enable Outro Completion for me</label>
+                <p class="help">When you stop an episode inside a marked credits/outro segment, mark it watched and clear its resume point.</p>
+                <label for="require-next">Require the immediate next episode to start?</label>
+                <select id="require-next" aria-label="Require the immediate next episode to start?">
+                    <option value="inherit">Use the server default</option>
+                    <option value="false">No — complete when I stop in credits</option>
+                    <option value="true">Yes — confirm with the next episode</option>
+                </select>
+                <p id="effective-setting" class="help"></p>
+                <p class="help">Confirmation must come from the same playback session/device and series. Starting another title cancels it. A series finale cannot be confirmed this way.</p>
+                <button type="submit">Save preferences</button>
+            </form>
+        </section>
+        <p id="status" role="status" aria-live="polite"></p>
+        <footer>
+            <p>Requires native Outro markers, for example from Intro Skipper. This does not change Jellyfin’s own watched-percentage rules.</p>
+            <p>Free software under <a href="./License">GPL-3.0-only</a>, with no warranty.</p>
+        </footer>
+    </main>
+</body>
+</html>
